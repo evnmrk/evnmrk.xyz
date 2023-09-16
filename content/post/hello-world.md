@@ -10,6 +10,8 @@ Hello world!
 
 This is my first post marking the day I set up this website.
 
+<!--more-->
+
 ## Purpose of This Blog
 
 I created this blog as a response to the gaining popularity of "micro-blogging" websites like Twitter and Facebook. Micro-blogging leaves little room for complete thoughts and ideas, and I believe personal blogs are the remedy to this problem. Plus, personal blogs can have much more customization if one knows their way around their static site generator.

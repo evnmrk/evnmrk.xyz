@@ -10,6 +10,8 @@ draft: false
 
 This (very late) writeup is for the [2023 ångstromCTF](https://2023.angstromctf.com/) "directory" web challenge. This challenge involved a webpage with 5000 directories, with one directory holding the flag. I wrote a simple perl script to enter each directory until the flag is found. Note that every directory without the flag instead holds the text, "your flag is in another file".
 
+<!--more-->
+
 # Perl Script
 ```perl
 #!/usr/bin/perl

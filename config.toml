@@ -37,7 +37,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   name = "Archives"
   weight = 20
   identifier = "archives"
-  url = "/post/"
+  url = "/posts/"
 [[menu.main]]
   name = "Tags"
   weight = 30
@@ -188,7 +188,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
     #d-facebook = "http://localhost:1313"
     #e-linkedin = "http://localhost:1313"
     #f-google = "http://localhost:1313"
-    #g-github = "http://localhost:1313"
+    g-github = "https://github.com/evnmrk"
     #h-weibo = "http://localhost:1313"
     #i-zhihu = "http://localhost:1313"
     #j-douban = "http://localhost:1313"

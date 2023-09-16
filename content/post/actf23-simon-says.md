@@ -10,6 +10,8 @@ draft: false
 
 This (very late) writeup is for the [2023 ångstromCTF](https://2023.angstromctf.com/) "Simon Says" misc challenge. This challenge involved using netcat to answer three questions in a very short time frame. The three questions are very similar. It involved taking the first three letters of one word and concatenating them with the last three letters of a second word. I wrote a perl script to connect to the TCP connection, read the two words, concatenate a new word, and send it back, repeating until the flag is given.
 
+<!--more-->
+
 # Perl Script
 ```perl
 #!/usr/bin/perl
