@@ -1,9 +1,9 @@
 ---
 title: "Hello World"
 date: 2023-09-14T20:00:23-07:00
+tags: ["blog"]
+categories: ["other"]
 draft: false
-tags: ["other"]
-categories: []
 ---
 
 Hello world!
