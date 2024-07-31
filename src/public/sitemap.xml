@@ -16,7 +16,7 @@
   </url>
   
   <url>
-    <loc>https://evnmrk.xyz/posts/ssh-fun-and-giggles/</loc>
+    <loc>https://evnmrk.xyz/post/ssh-fun-and-giggles/</loc>
     <lastmod>2023-11-14T11:27:08-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -37,7 +37,7 @@
   </url>
   
   <url>
-    <loc>https://evnmrk.xyz/posts/</loc>
+    <loc>https://evnmrk.xyz/post/</loc>
     <lastmod>2023-11-14T11:27:08-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -107,7 +107,7 @@
   </url>
   
   <url>
-    <loc>https://evnmrk.xyz/posts/actf23-simon-says/</loc>
+    <loc>https://evnmrk.xyz/post/actf23-simon-says/</loc>
     <lastmod>2023-09-15T22:49:48-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -121,7 +121,7 @@
   </url>
   
   <url>
-    <loc>https://evnmrk.xyz/posts/actf23-directory/</loc>
+    <loc>https://evnmrk.xyz/post/actf23-directory/</loc>
     <lastmod>2023-09-15T22:28:55-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -135,7 +135,7 @@
   </url>
   
   <url>
-    <loc>https://evnmrk.xyz/posts/hello-world/</loc>
+    <loc>https://evnmrk.xyz/post/hello-world/</loc>
     <lastmod>2023-09-14T20:00:23-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

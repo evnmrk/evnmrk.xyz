@@ -9,10 +9,10 @@
     <lastBuildDate>Fri, 15 Sep 2023 22:49:48 -0700</lastBuildDate><atom:link href="https://evnmrk.xyz/tags/networking/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ångstromCTF 2023 - Simon Says Writeup</title>
-      <link>https://evnmrk.xyz/posts/actf23-simon-says/</link>
+      <link>https://evnmrk.xyz/post/actf23-simon-says/</link>
       <pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate>
       
-      <guid>https://evnmrk.xyz/posts/actf23-simon-says/</guid>
+      <guid>https://evnmrk.xyz/post/actf23-simon-says/</guid>
       <description>&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
 &lt;p&gt;This (very late) writeup is for the &lt;a href=&#34;https://2023.angstromctf.com/&#34;&gt;2023 ångstromCTF&lt;/a&gt; &amp;ldquo;Simon Says&amp;rdquo; misc challenge. This challenge involved using netcat to answer three questions in a very short time frame. The three questions are very similar. It involved taking the first three letters of one word and concatenating them with the last three letters of a second word. I wrote a perl script to connect to the TCP connection, read the two words, concatenate a new word, and send it back, repeating until the flag is given.&lt;/p&gt;</description>
     </item>

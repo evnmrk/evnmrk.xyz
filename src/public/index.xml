@@ -20,40 +20,40 @@ Contact Contact me at me at evnmrk.xyz.
     
     <item>
       <title>Bash Scripting - Mass VM SSH Connections for Fun and Giggles</title>
-      <link>https://evnmrk.xyz/posts/ssh-fun-and-giggles/</link>
+      <link>https://evnmrk.xyz/post/ssh-fun-and-giggles/</link>
       <pubDate>Tue, 14 Nov 2023 11:27:08 -0800</pubDate>
       
-      <guid>https://evnmrk.xyz/posts/ssh-fun-and-giggles/</guid>
+      <guid>https://evnmrk.xyz/post/ssh-fun-and-giggles/</guid>
       <description>Introduction I am currently finishing my last semester of university. My final computer science elective I am taking is Linux Administration. It is a fairly easy and straightforward class, but the reason I am taking this class is to learn more about the Linux Operating System, specifically when it comes to system administration.
 One of the topics I wanted to learn about is bash scripting. I have seen many bash scripts online, but I have never taken the time to learn how to read or write them.</description>
     </item>
     
     <item>
       <title>ångstromCTF 2023 - Simon Says Writeup</title>
-      <link>https://evnmrk.xyz/posts/actf23-simon-says/</link>
+      <link>https://evnmrk.xyz/post/actf23-simon-says/</link>
       <pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate>
       
-      <guid>https://evnmrk.xyz/posts/actf23-simon-says/</guid>
+      <guid>https://evnmrk.xyz/post/actf23-simon-says/</guid>
       <description>&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
 &lt;p&gt;This (very late) writeup is for the &lt;a href=&#34;https://2023.angstromctf.com/&#34;&gt;2023 ångstromCTF&lt;/a&gt; &amp;ldquo;Simon Says&amp;rdquo; misc challenge. This challenge involved using netcat to answer three questions in a very short time frame. The three questions are very similar. It involved taking the first three letters of one word and concatenating them with the last three letters of a second word. I wrote a perl script to connect to the TCP connection, read the two words, concatenate a new word, and send it back, repeating until the flag is given.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>ångstromCTF 2023 - Directory Writeup</title>
-      <link>https://evnmrk.xyz/posts/actf23-directory/</link>
+      <link>https://evnmrk.xyz/post/actf23-directory/</link>
       <pubDate>Fri, 15 Sep 2023 22:28:55 -0700</pubDate>
       
-      <guid>https://evnmrk.xyz/posts/actf23-directory/</guid>
+      <guid>https://evnmrk.xyz/post/actf23-directory/</guid>
       <description>&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
 &lt;p&gt;This (very late) writeup is for the &lt;a href=&#34;https://2023.angstromctf.com/&#34;&gt;2023 ångstromCTF&lt;/a&gt; &amp;ldquo;directory&amp;rdquo; web challenge. This challenge involved a webpage with 5000 directories, with one directory holding the flag. I wrote a simple perl script to enter each directory until the flag is found. Note that every directory without the flag instead holds the text, &amp;ldquo;your flag is in another file&amp;rdquo;.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Hello World</title>
-      <link>https://evnmrk.xyz/posts/hello-world/</link>
+      <link>https://evnmrk.xyz/post/hello-world/</link>
       <pubDate>Thu, 14 Sep 2023 20:00:23 -0700</pubDate>
       
-      <guid>https://evnmrk.xyz/posts/hello-world/</guid>
+      <guid>https://evnmrk.xyz/post/hello-world/</guid>
       <description>&lt;p&gt;Hello world!&lt;/p&gt;
 &lt;p&gt;This is my first post marking the day I set up this website.&lt;/p&gt;</description>
     </item>

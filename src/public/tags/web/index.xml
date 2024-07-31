@@ -9,10 +9,10 @@
     <lastBuildDate>Fri, 15 Sep 2023 22:28:55 -0700</lastBuildDate><atom:link href="https://evnmrk.xyz/tags/web/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ångstromCTF 2023 - Directory Writeup</title>
-      <link>https://evnmrk.xyz/posts/actf23-directory/</link>
+      <link>https://evnmrk.xyz/post/actf23-directory/</link>
       <pubDate>Fri, 15 Sep 2023 22:28:55 -0700</pubDate>
       
-      <guid>https://evnmrk.xyz/posts/actf23-directory/</guid>
+      <guid>https://evnmrk.xyz/post/actf23-directory/</guid>
       <description>&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
 &lt;p&gt;This (very late) writeup is for the &lt;a href=&#34;https://2023.angstromctf.com/&#34;&gt;2023 ångstromCTF&lt;/a&gt; &amp;ldquo;directory&amp;rdquo; web challenge. This challenge involved a webpage with 5000 directories, with one directory holding the flag. I wrote a simple perl script to enter each directory until the flag is found. Note that every directory without the flag instead holds the text, &amp;ldquo;your flag is in another file&amp;rdquo;.&lt;/p&gt;</description>
     </item>
