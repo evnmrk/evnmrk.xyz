@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>ångstromCTF 2023 - Directory Writeup - evnmrk.xyz</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="evnmrk" /><meta name="description" content="Introduction This (very late) writeup is for the 2023 ångstromCTF &amp;ldquo;directory&amp;rdquo; web challenge. This challenge involved a webpage with 5000 directories, with one directory holding the flag. I wrote a simple perl script to enter each directory until the flag is found. Note that every directory without the flag instead holds the text, &amp;ldquo;your flag is in another file&amp;rdquo;.
+" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.2 with theme even" />
+
+
+<link rel="canonical" href="https://evnmrk.xyz/posts/actf23-directory/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.7a8915f9eb2d9fc7f4795fcb62afb0b2f7ed7689442c3f7893ced6be56f256bd.css" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+<meta property="og:title" content="ångstromCTF 2023 - Directory Writeup" />
+<meta property="og:description" content="Introduction
+This (very late) writeup is for the 2023 ångstromCTF &ldquo;directory&rdquo; web challenge. This challenge involved a webpage with 5000 directories, with one directory holding the flag. I wrote a simple perl script to enter each directory until the flag is found. Note that every directory without the flag instead holds the text, &ldquo;your flag is in another file&rdquo;." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://evnmrk.xyz/posts/actf23-directory/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-09-15T22:28:55-07:00" />
+<meta property="article:modified_time" content="2023-09-15T22:28:55-07:00" />
+
+<meta itemprop="name" content="ångstromCTF 2023 - Directory Writeup">
+<meta itemprop="description" content="Introduction
+This (very late) writeup is for the 2023 ångstromCTF &ldquo;directory&rdquo; web challenge. This challenge involved a webpage with 5000 directories, with one directory holding the flag. I wrote a simple perl script to enter each directory until the flag is found. Note that every directory without the flag instead holds the text, &ldquo;your flag is in another file&rdquo;."><meta itemprop="datePublished" content="2023-09-15T22:28:55-07:00" />
+<meta itemprop="dateModified" content="2023-09-15T22:28:55-07:00" />
+<meta itemprop="wordCount" content="146">
+<meta itemprop="keywords" content="ångstromCTF,CTF,perl,web," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ångstromCTF 2023 - Directory Writeup"/>
+<meta name="twitter:description" content="Introduction
+This (very late) writeup is for the 2023 ångstromCTF &ldquo;directory&rdquo; web challenge. This challenge involved a webpage with 5000 directories, with one directory holding the flag. I wrote a simple perl script to enter each directory until the flag is found. Note that every directory without the flag instead holds the text, &ldquo;your flag is in another file&rdquo;."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">evnmrk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/posts/">
+        <li class="mobile-menu-item">Posts</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">evnmrk</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/posts/">Posts</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+  <div class="post-content">
+    <h1 id="introduction">Introduction</h1>
+<p>This (very late) writeup is for the <a href="https://2023.angstromctf.com/">2023 ångstromCTF</a> &ldquo;directory&rdquo; web challenge. This challenge involved a webpage with 5000 directories, with one directory holding the flag. I wrote a simple perl script to enter each directory until the flag is found. Note that every directory without the flag instead holds the text, &ldquo;your flag is in another file&rdquo;.</p>
+<h1 id="perl-script">Perl Script</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-perl" data-lang="perl"><span class="ch">#!/usr/bin/perl</span>
+
+<span class="k">use</span> <span class="nn">strict</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">warnings</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">LWP::Simple</span><span class="p">;</span>
+
+<span class="k">my</span> <span class="nv">$URL</span> <span class="o">=</span> <span class="s">&#34;https://directory.web.actf.co/&#34;</span><span class="p">;</span>
+
+<span class="k">foreach</span> <span class="p">(</span><span class="mi">0</span> <span class="o">..</span> <span class="mi">5000</span><span class="p">){</span>
+    <span class="k">my</span> <span class="nv">$new_URL</span> <span class="o">=</span> <span class="nv">$URL</span> <span class="o">.</span> <span class="nv">$_</span> <span class="o">.</span> <span class="s">&#39;.html&#39;</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$response</span> <span class="o">=</span> <span class="n">get</span> <span class="nv">$new_URL</span><span class="p">;</span>
+    <span class="k">print</span> <span class="s">&#34;$_\n&#34;</span><span class="p">;</span>
+    <span class="k">unless</span> <span class="p">(</span> <span class="nv">$response</span> <span class="ow">eq</span> <span class="s">&#34;your flag is in another file&#34;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">print</span> <span class="nv">$response</span><span class="p">;</span>
+        <span class="k">last</span><span class="p">;</span>
+    <span class="p">}</span>   
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="result">Result</h1>
+<p>The script found the flag in about 5 minutes. The script is not very fast, but it gets the job done.</p>
+  </div>
+</article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:me@evnmrk.xyz" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/evnmrk" class="iconfont icon-github" title="github"></a>
+  <a href="https://evnmrk.xyz/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+  
+
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

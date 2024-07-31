@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Bash Scripting - Mass VM SSH Connections for Fun and Giggles - evnmrk.xyz</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="evnmrk" /><meta name="description" content="Introduction I am currently finishing my last semester of university. My final computer science elective I am taking is Linux Administration. It is a fairly easy and straightforward class, but the reason I am taking this class is to learn more about the Linux Operating System, specifically when it comes to system administration.
+One of the topics I wanted to learn about is bash scripting. I have seen many bash scripts online, but I have never taken the time to learn how to read or write them." />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.92.2 with theme even" />
+
+
+<link rel="canonical" href="https://evnmrk.xyz/post/ssh-fun-and-giggles/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.7a8915f9eb2d9fc7f4795fcb62afb0b2f7ed7689442c3f7893ced6be56f256bd.css" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+<meta property="og:title" content="Bash Scripting - Mass VM SSH Connections for Fun and Giggles" />
+<meta property="og:description" content="Introduction I am currently finishing my last semester of university. My final computer science elective I am taking is Linux Administration. It is a fairly easy and straightforward class, but the reason I am taking this class is to learn more about the Linux Operating System, specifically when it comes to system administration.
+One of the topics I wanted to learn about is bash scripting. I have seen many bash scripts online, but I have never taken the time to learn how to read or write them." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://evnmrk.xyz/post/ssh-fun-and-giggles/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-11-14T11:27:08-08:00" />
+<meta property="article:modified_time" content="2023-11-14T11:27:08-08:00" />
+
+<meta itemprop="name" content="Bash Scripting - Mass VM SSH Connections for Fun and Giggles">
+<meta itemprop="description" content="Introduction I am currently finishing my last semester of university. My final computer science elective I am taking is Linux Administration. It is a fairly easy and straightforward class, but the reason I am taking this class is to learn more about the Linux Operating System, specifically when it comes to system administration.
+One of the topics I wanted to learn about is bash scripting. I have seen many bash scripts online, but I have never taken the time to learn how to read or write them."><meta itemprop="datePublished" content="2023-11-14T11:27:08-08:00" />
+<meta itemprop="dateModified" content="2023-11-14T11:27:08-08:00" />
+<meta itemprop="wordCount" content="916">
+<meta itemprop="keywords" content="bash,shell,SSH," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Bash Scripting - Mass VM SSH Connections for Fun and Giggles"/>
+<meta name="twitter:description" content="Introduction I am currently finishing my last semester of university. My final computer science elective I am taking is Linux Administration. It is a fairly easy and straightforward class, but the reason I am taking this class is to learn more about the Linux Operating System, specifically when it comes to system administration.
+One of the topics I wanted to learn about is bash scripting. I have seen many bash scripts online, but I have never taken the time to learn how to read or write them."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">evnmrk</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Posts</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+
+  
+
+
+</nav>
+
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">evnmrk</a>
+</div>
+
+
+
+
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Posts</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Bash Scripting - Mass VM SSH Connections for Fun and Giggles</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2023-11-14 </span>
+        <div class="post-category">
+            <a href="/categories/script/"> script </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#the-bash-script">The Bash Script</a>
+      <ul>
+        <li><a href="#usage">Usage</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#known-issues">Known Issues</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="introduction">Introduction</h1>
+<p>I am currently finishing my last semester of university. My final
+computer science elective I am taking is Linux Administration.
+It is a fairly easy and straightforward class, but the reason I am taking
+this class is to learn more about the Linux Operating System, specifically
+when it comes to system administration.</p>
+<p>One of the topics I wanted to learn about is bash scripting. I have seen many
+bash scripts online, but I have never taken the time to learn how to read or
+write them. We did have two lectures about bash scripting with their own lab,
+which is great, but I wanted more experience with bash scripts.</p>
+<p>Halfway through the semester, we transition into the virtual machine portion
+of the class, where we get to be sysadmins of our own virtual Linux
+distributions. Most of the students, including me, use the school computers,
+which are connected together in the same network. You can also SSH from the
+school computer into your virtual machine if you set the connection type to
+bridge. Because of this, I can SSH not only into my virtual machine, <em>but also
+other students' machines</em>. A mischevious idea brewed in my head that night.</p>
+<p>After one long coding session late at night, and a couple rewrites and
+modifications, I finally had an automated shell script that will SSH into
+<strong>every</strong> students' virtual machine and place a text file on their desktop &ndash;
+a signature from me proclaiming the time and date I &ldquo;hacked&rdquo; into their system.</p>
+<h1 id="the-bash-script">The Bash Script</h1>
+<p>Here is the bash script:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+<span class="c1"># The purpose of this script is to ssh into VMs on the network and place a harmless text file on their desktop</span>
+
+<span class="nv">OS</span><span class="o">=</span><span class="nv">$2</span>
+
+show_help<span class="o">()</span> <span class="o">{</span>
+        <span class="nb">echo</span> <span class="s2">&#34;Usage: sshtxtmsg [file] [operating-system]&#34;</span>
+        <span class="nb">echo</span> <span class="s2">&#34;  File must be formated: Last,First&#34;</span>
+        <span class="nb">echo</span> <span class="s2">&#34;  Must have &#39;sshpass&#39; installed!&#34;</span>
+<span class="o">}</span>
+
+ssh<span class="o">()</span> <span class="o">{</span>
+        <span class="nv">LNAME</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$1</span> <span class="p">|</span> egrep -o <span class="s1">&#39;^[[:alpha:]]*&#39;</span><span class="sb">`</span>
+        <span class="c1">#echo &#34;$LNAME&#34;</span>
+        <span class="nv">FNAME</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$1</span> <span class="p">|</span> egrep -o <span class="s1">&#39;[[:alpha:]]*$&#39;</span><span class="sb">`</span>
+        <span class="c1">#echo &#34;$FNAME&#34;</span>
+        <span class="nv">THREEF</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$FNAME</span> <span class="p">|</span> egrep -o <span class="s1">&#39;^[[:alpha:]]{1,3}&#39;</span><span class="sb">`</span>
+        <span class="c1">#echo &#34;$THREEF&#34;</span>
+        <span class="nv">THREEL</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$LNAME</span> <span class="p">|</span> egrep -o <span class="s1">&#39;^[[:alpha:]]{1,3}&#39;</span><span class="sb">`</span>
+        <span class="c1">#echo &#34;$THREEL&#34;</span>
+        <span class="nv">HNAME</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">OS</span><span class="si">}</span><span class="s2">-</span><span class="si">${</span><span class="nv">THREEF</span><span class="si">}${</span><span class="nv">THREEL</span><span class="si">}</span><span class="s2">&#34;</span>
+        <span class="c1">#echo &#34;$HNAME&#34;</span>
+        <span class="nv">USERNAME</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$FNAME</span> <span class="p">|</span> tr <span class="o">[</span>:upper:<span class="o">]</span> <span class="o">[</span>:lower:<span class="o">]</span><span class="sb">`</span>
+        <span class="c1">#echo &#34;$USERNAME&#34;</span>
+        <span class="nv">COMMAND</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">USERNAME</span><span class="si">}</span><span class="s2">@</span><span class="si">${</span><span class="nv">HNAME</span><span class="si">}</span><span class="s2">&#34;</span>
+        <span class="c1">#CMD=&#39;sshpass -p MP2650 ssh -o StrictHostKeyChecking=no -q -l root $HNAME &#34;echo &#34;EVNMRK WAS HERE ON &#34; &gt; ~/Desktop/EVNMRK-WAS-HERE.txt; date &gt;&gt; ~/Desktop/EVNMRK-WAS-HERE.txt&#34;&#39;</span>
+        <span class="nv">CMD</span><span class="o">=</span><span class="s1">&#39;sshpass -p cmps2650 ssh -o StrictHostKeyChecking=no -q -l $USERNAME $HNAME &#34;echo &#34;EVNMRK WAS HERE ON &#34; &gt; ~/Desktop/EVNMRK-WAS-HERE.txt; date &gt;&gt; ~/Desktop/EVNMRK-WAS-HERE.txt&#34;&#39;</span>
+        <span class="c1">#CMD1=&#34;echo &#39;$COMMAND&#39;&#34;</span>
+        <span class="nb">eval</span> <span class="s2">&#34;</span><span class="nv">$CMD</span><span class="s2">&#34;</span>
+        <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+                <span class="nb">echo</span> <span class="s2">&#34;SUCCESS for </span><span class="nv">$COMMAND</span><span class="s2"> - </span><span class="nv">$1</span><span class="s2">&#34;</span>
+        <span class="k">elif</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">1</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+                <span class="nb">echo</span> <span class="s2">&#34;FAILURE for </span><span class="nv">$COMMAND</span><span class="s2">&#34;</span>
+        <span class="k">else</span>
+                <span class="nb">echo</span> <span class="s2">&#34;UNKNOWN ERROR&#34;</span>
+        <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1"># MAIN</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -lt <span class="m">2</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        show_help
+        <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+<span class="k">for</span> name in <span class="sb">`</span>cat <span class="nv">$1</span><span class="sb">`</span><span class="p">;</span> <span class="k">do</span>
+        ssh <span class="s2">&#34;</span><span class="nv">$name</span><span class="s2">&#34;</span>
+<span class="k">done</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="usage">Usage</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback">Usage: sshtxtmsg [file] [operating-system]
+	File must be formated: Last,First
+	Must have &#39;sshpass&#39; installed!
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="how-it-works">How It Works</h2>
+<p>The script requires a text file with every students' name in the format of
+&ldquo;Last,First&rdquo; as the first argument. Each name is separated by a newline.
+The script also requires the name of the operating system you are connecting
+to as the second argument. The reason for this is because of how we set up the
+virtual machines as a class. The instructor had us follow instructions on how
+to set up our virtual machines. Part of this instructions is what to put for
+the hostname, username, password, and root password. These fields are
+determined by the students' first and last name, which is why we need the
+student roster. The hostname field has the operating system&rsquo;s name inside, too.</p>
+<ul>
+<li>Example Debian hostname for student &ldquo;Dale Cooper&rdquo;
+<ul>
+<li><code>debian-dalcoo</code></li>
+</ul>
+</li>
+<li>Example username
+<ul>
+<li><code>dale</code></li>
+</ul>
+</li>
+<li>Example ssh command
+<ul>
+<li><code>ssh dale@debian-dalcoo</code></li>
+</ul>
+</li>
+</ul>
+<p>Using regex, we can splice the first and last name to create a username and
+hostname. But we run into a problem: <code>ssh</code> cannot be automated, since it
+queries for a password. To solve this, we use the very unsecure <code>sshpass</code>,
+which can hold the password in a flag. The password of the user is the same for
+everyone: the classname. We also add the <code>StrictHostKeyChecking=no</code> flag to
+ignore asking to remember the ssh fingerprint for 100% automation. Here is
+that command:</p>
+<p><code>sshpass -p cmps2650 ssh -o StrictHostKeyChecking=no -q -l $USERNAME $HNAME</code></p>
+<p>We can append the commands to run once a connection is made to the end of the
+sshpass command. We just run an echo command for our text and redirect it into
+a new textfile. Then we append the datetime the same way.</p>
+<p><code>&quot;EVNMRK WAS HERE ON &quot; &gt; ~/Desktop/EVNMRK-WAS-HERE.txt; date &gt;&gt; ~/Desktop/EVNMRK-WAS-HERE.txt&quot;</code></p>
+<p>The script will do the previous commands for every student entry, outputting
+a success or failure.</p>
+<h2 id="known-issues">Known Issues</h2>
+<p>This script will not work for users who choose their own unique hostname,
+username, or password. It will also not work for users who install their
+virtual machine on their own laptop. Basically it doesn&rsquo;t work on students
+who are lazy, cannot RTFM, or are mavericks.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Out of the many times I ran this script, I only had three successful
+connections.</p>
+<p>I also have a version of this script that will run in an infinite loop,
+but let&rsquo;s not get into any trouble with that&hellip;</p>
+<p>Use this script however you like, feel free to modify for your own use.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">evnmrk</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2023-11-14
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/bash/">bash</a>
+          <a href="/tags/shell/">shell</a>
+          <a href="/tags/ssh/">SSH</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/actf23-simon-says/">
+            <span class="next-text nav-default">ångstromCTF 2023 - Simon Says Writeup</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:me@evnmrk.xyz" class="iconfont icon-email" title="email"></a>
+      <a href="https://github.com/evnmrk" class="iconfont icon-github" title="github"></a>
+  <a href="https://evnmrk.xyz/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+  
+
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

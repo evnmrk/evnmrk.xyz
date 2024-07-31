@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CTF Writeup on evnmrk.xyz</title>
+    <link>https://evnmrk.xyz/categories/ctf-writeup/</link>
+    <description>Recent content in CTF Writeup on evnmrk.xyz</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 15 Sep 2023 22:49:48 -0700</lastBuildDate><atom:link href="https://evnmrk.xyz/categories/ctf-writeup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ångstromCTF 2023 - Simon Says Writeup</title>
+      <link>https://evnmrk.xyz/post/actf23-simon-says/</link>
+      <pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate>
+      
+      <guid>https://evnmrk.xyz/post/actf23-simon-says/</guid>
+      <description>&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;This (very late) writeup is for the &lt;a href=&#34;https://2023.angstromctf.com/&#34;&gt;2023 ångstromCTF&lt;/a&gt; &amp;ldquo;Simon Says&amp;rdquo; misc challenge. This challenge involved using netcat to answer three questions in a very short time frame. The three questions are very similar. It involved taking the first three letters of one word and concatenating them with the last three letters of a second word. I wrote a perl script to connect to the TCP connection, read the two words, concatenate a new word, and send it back, repeating until the flag is given.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>ångstromCTF 2023 - Directory Writeup</title>
+      <link>https://evnmrk.xyz/post/actf23-directory/</link>
+      <pubDate>Fri, 15 Sep 2023 22:28:55 -0700</pubDate>
+      
+      <guid>https://evnmrk.xyz/post/actf23-directory/</guid>
+      <description>&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;This (very late) writeup is for the &lt;a href=&#34;https://2023.angstromctf.com/&#34;&gt;2023 ångstromCTF&lt;/a&gt; &amp;ldquo;directory&amp;rdquo; web challenge. This challenge involved a webpage with 5000 directories, with one directory holding the flag. I wrote a simple perl script to enter each directory until the flag is found. Note that every directory without the flag instead holds the text, &amp;ldquo;your flag is in another file&amp;rdquo;.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
