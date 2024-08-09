@@ -16,7 +16,7 @@ jobs:
           submodules: true
 
       - name: Generate and deploy website
-        uses: ronvanderheijden/hugo-rsync-deployment@master
+        uses: evnmrk/hugo-rsync-deployment@master
         env:
           VPS_DEPLOY_KEY: ${{ secrets.VPS_DEPLOY_KEY }}
           VPS_DEPLOY_USER: ${{ secrets.SSH_USER }}
