@@ -1,232 +1,166 @@
-baseURL = "https://evnmrk.xyz"
-languageCode = "en"
-defaultContentLanguage = "en"                             # en / zh-cn / ... (This field determines which i18n file to use)
+baseURL = "https://evnmrk.xyz/"
+theme = "hugo-ficurinia"
 title = "evnmrk.xyz"
-preserveTaxonomyNames = true
-enableRobotsTXT = true
-enableEmoji = true
-theme = "even"
-enableGitInfo = false # use git commit log to generate lastmod record # 可根据 Git 中的提交生成最近更新记录。
+languageCode = "en"
+defaultContentLanguage = "en"
 
-# Syntax highlighting by Chroma. NOTE: Don't enable `highlightInClient` and `chroma` at the same time!
-pygmentsOptions = "linenos=table"
-pygmentsCodefences = true
-pygmentsUseClasses = true
-pygmentsCodefencesGuessSyntax = true
 
-hasCJKLanguage = false     # has chinese/japanese/korean ? # 自动检测是否包含 中文\日文\韩文
-paginate = 5                                              # 首页每页显示的文章数
-disqusShortname = ""      # disqus_shortname
-googleAnalytics = ""      # UA-XXXXXXXX-X
-copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
+# this will be included in the footer after the current year the site is last
+# built, followed by the (c) symbol
+# you can use markdown inside this field
+# copyright = "Some copyright notice - [my license](https://example.com/license)"
 
-[author]                  # essential                     # 必需
-  name = "evnmrk"
+paginate = 5  # number of articles per page in the index
+summaryLength = 70  # number of words for article summaries
 
-[sitemap]                 # essential                     # 必需
-  changefreq = "weekly"
-  priority = 0.5
-  filename = "sitemap.xml"
-
-[[menu.main]]             # config your menu              # 配置目录
-  name = "Home"
-  weight = 10
-  identifier = "home"
-  url = "/"
-[[menu.main]]
-  name = "Posts"
-  weight = 20
-  identifier = "archives"
-  url = "/post/"
-[[menu.main]]
-  name = "Tags"
-  weight = 30
-  identifier = "tags"
-  url = "/tags/"
-[[menu.main]]
-  name = "Categories"
-  weight = 40
-  identifier = "categories"
-  url = "/categories/"
 
 [params]
-  version = "4.x"           # Used to give a friendly message when you have an incompatible update
-  debug = false             # If true, load `eruda.min.js`. See https://github.com/liriliri/eruda
+    author = "evnmrk"
+    description = "evnmrk.xyz"  # this will be added as metadata
 
-  since = "2023"            # Site creation time          # 站点建立时间
-  # use public git repo url to link lastmod git commit, enableGitInfo should be true.
-  # 指定 git 仓库地址，可以生成指向最近更新的 git commit 的链接，需要将 enableGitInfo 设置成 true.
-  gitRepo = ""
+    posts = "posts"  # content directory where to find home page posts; default searches in "posts" and "post"
+    showPostsLink = true  # show or hide the link to the simple post list
+    extraContentDirs = []  # other content directories to render similarly to the home page
+    showcaseDir = "showcase"  # create a content directory that shows a special showcase section in the home page
 
-  # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
-  logoTitle = "evnmrk"        # default: the title value    # 默认值: 上面设置的title值
-  #keywords = ["Hugo", "theme","even"]
-  #description = "Hugo theme even example site."
+    # shows a specified single page as a home page, instead of the traditional articles list
+    # requires setting `homeSinglePage`
+    # goes well with extraContentDirs
+    showSinglePageAsHome = false
+    homeSinglePage = "/home"
 
-  # paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目，建议修改为一个较大的值
-  archivePaginate = 50
+    # It's best to put these icons in the "static" folder of your site
+    logo = "/apple-touch-icon.png"
+    favicon = "/faviconi-32x32.png"  # 32x32
+    faviconIco = "/favicon.ico"  # 32x32
+    appletouch = "/apple-touch-icon.png"  # 180x180
+    # svgicon = "/safari-pinned-tab.svg"
+    icon512 = "/android-chrome-512x512.png"  # 512x512 png image
 
-  # show 'xx Posts In Total' in archive page ?            # 是否在归档页显示文章的总数
-  showArchiveCount = true
+    logoRightOfTitle = false  # positions the logo to the right of the title; default: false
 
-  # The date format to use; for a list of valid formats, see https://gohugo.io/functions/format/
-  dateFormatToUse = "2006-01-02"
+    showTags = true  # show the Tags menu item; default true
+    showRss = true  # show the link for the RSS feed; default true
 
-  # show word count and read time ?                       # 是否显示字数统计与阅读时间
-  moreMeta = false
+    imageInArticlePreview = false  # show images in article preview; default false
+    fitImageInArticlePreview = false  # make article preview images fit the article preview instead of getting cropped
+    articleSummary = true  # show a summary in article preview; default true
+    
+    fontFamily = "Roboto"  # changes the font, default "JetBrains Mono"
+    titleFontFamily = "Roboto"  # font used for titles and headings
+    monospaceFontFamily = "Terminus"  # changes the monospace font for code, default "JetBrains Mono"
 
-  # Syntax highlighting by highlight.js
-  highlightInClient = false
+    # multipliers applied to font sizes, useful for custom fonts that may be too big or too small
+    titleFontSizeMultiplier = 1.0
+    mainFontSizeMultiplier = 1.0
+    monoFontSizeMultiplier = 1.0
 
-  # 一些全局开关，你也可以在每一篇内容的 front matter 中针对单篇内容关闭或开启某些功能，在 archetypes/default.md 查看更多信息。
-  # Some global options, you can also close or open something in front matter for a single post, see more information from `archetypes/default.md`.
-  toc = true                                                                            # 是否开启目录
-  autoCollapseToc = false   # Auto expand and collapse toc                              # 目录自动展开/折叠
-  fancybox = true           # see https://github.com/fancyapps/fancybox                 # 是否启用fancybox（图片可点击）
+    contentWidth = "1000px"  # maximum width of the site content, css syntax
 
-  # mathjax
-  mathjax = false           # see https://www.mathjax.org/                              # 是否使用mathjax（数学公式）
-  mathjaxEnableSingleDollar = false                                                     # 是否使用 $...$ 即可進行inline latex渲染
-  mathjaxEnableAutoNumber = false                                                       # 是否使用公式自动编号
-  mathjaxUseLocalFiles = false  # You should install mathjax in `your-site/static/lib/mathjax`
+    paperCards = false  # enable paper card style; default false
+    buttonTags = false  # enable button tag style; default false
+    tagsInArticlePreview = true  # enable tags list in the article preview card
+    gridView = false  # show post list as a grid. goes well with paperCards
+    bigArticleTitle = true  # makes the title in the single article view bigger
+    navtype = "standard"  # changes the style of the pagination, available styles are: "standard", "circles"
+    enableShadow = true  # shows a shadow around some elements
+    menuStyle = "standard"  # changes the style of the main site navigation menu, available styles are: "standard", "buttons"
+    inputStyle = "standard" # changes the style of inputs (like the searchbar), available styles are: "standard", "buttons"
 
-  postMetaInFooter = true   # contain author, lastMod, markdown link, license           # 包含作者，上次修改时间，markdown链接，许可信息
-  linkToMarkDown = false    # Only effective when hugo will output .md files.           # 链接到markdown原始文件（仅当允许hugo生成markdown文件时有效）
-  contentCopyright = ''     # e.g. '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
+    enableSearch = true  # enable search page
+    searchbarEverywhere = true  # if the searchbar should be shown in every page; requires enableSearch
+    searchMenuLink = false  # add a search link to the navigation menu; requires enableSearch
+    mobileHamburgerNav = false  # alternative hamburger menu layout for the main nav menu when screen is small
 
-  changyanAppid = ""        # Changyan app id             # 畅言
-  changyanAppkey = ""       # Changyan app key
+    enableFeatured = false  # enable a particular view for articles marked as featured (featured: true in the article frontmatter)
 
-  livereUID = ""            # LiveRe UID                  # 来必力
+    underlineTitleLinks = false  # show an underline also for links that are titles
 
-  baiduPush = false        # baidu push                  # 百度
-  baiduAnalytics = ""      # Baidu Analytics
-  baiduVerification = ""   # Baidu Verification
-  googleVerification = ""  # Google Verification         # 谷歌
+    # enable comments support with commento using the script from your server
+    # commento = "https://example.com/js/commento.js"
 
-  # Link custom CSS and JS assets
-  #   (relative to /static/css and /static/js respectively)
-  customCSS = []
-  customJS = []
+    # enable comments support with cactus comments (cactus.chat)
+    # cactusCommentsSiteName = "example.com"
+    # cactusCommentsServerName = "cactus.chat"
+    # cactusCommentsHomeserver = "https://matrix.cactus.chat:8448"
 
-  uglyURLs = false          # please keep same with uglyurls setting
+    # enable analytics using Plausible
+    # plausibleScriptUrl = "https://something.com/..."
+    # plausibleDomain = "example.com"
 
-  # Show language selector for multilingual site.
-  showLanguageSelector = false
+    # enable analytics using Umami
+    # umamiScriptUrl = "https://something.com/..."
+    # umamiWebsiteId = "example-tracking-code"
 
-  [params.publicCDN]        # load these files from public cdn                          # 启用公共CDN，需自行定义
-    enable = false
-    jquery = '<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>'
-    slideout = '<script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>'
-    fancyboxJS = '<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>'
-    fancyboxCSS = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">'
-    timeagoJS = '<script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>'
-    timeagoLocalesJS = '<script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>'
-    flowchartDiagramsJS = '<script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script>'
-    sequenceDiagramsCSS = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">'
-    sequenceDiagramsJS = '<script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>'
+    # enableShareOnFediverse = false  # enable a button at the end of an article to share it on the fediverse
+    tocBeforeImage = false  # show the table of contents before the main article image; default false
 
-  # Display a message at the beginning of an article to warn the readers that it's content may be outdated.
-  # 在文章开头显示提示信息，提醒读者文章内容可能过时。
-  [params.outdatedInfoWarning]
-    enable = false
-    hint = 30               # Display hint if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示提醒
-    warn = 180              # Display warning if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示警告
+    # WARNING: deprecated! Use [[menu.icons]] instead, look below
+    # links = [
+    #     ["GitLab", "https://gitlab.com/gabmus"],
+    #     ["GNOME", "https://gitlab.gnome.org/gabmus"],
+    #     ["YouTube", "https://youtube.com/TechPillsNet"]
+    # ]
 
-  [params.gitment]          # Gitment is a comment system based on GitHub issues. see https://github.com/imsun/gitment
-    owner = ""              # Your GitHub ID
-    repo = ""               # The repo to store comments
-    clientId = ""           # Your client ID
-    clientSecret = ""       # Your client secret
+    # you can customize all of the colors in this theme
+    # Colors are defined in data/colors.yml
 
-  [params.utterances]       # https://utteranc.es/
-    owner = ""              # Your GitHub ID
-    repo = ""               # The repo to store comments
+    # alternative sidebar layout
+    enableSidebarLayout = false
+    tocInSidebar = false  # if the sidebar is enbabled, show the TOC in the sidebar
 
-  [params.gitalk]           # Gitalk is a comment system based on GitHub issues. see https://github.com/gitalk/gitalk
-    owner = ""              # Your GitHub ID
-    repo = ""               # The repo to store comments
-    clientId = ""           # Your client ID
-    clientSecret = ""       # Your client secret
+    # redirect to baseURL if current URL host doesn't match
+    # useful if deploying in gitlab pages with custom domain and don't want
+    # the username.gitlab.io/website url to persist
+    # this requires you to set baseURL (see above)
+    forceRedirect = false
 
-  # Valine.
-  # You can get your appid and appkey from https://leancloud.cn
-  # more info please open https://valine.js.org
-  [params.valine]
-    enable = false
-    appId = '你的appId'
-    appKey = '你的appKey'
-    notify = false  # mail notifier , https://github.com/xCss/Valine/wiki
-    verify = false # Verification code
-    avatar = 'mm'
-    placeholder = '说点什么吧...'
-    visitor = false
+    infiniteScrolling = false  # activates infinite scrolling instead of regular pagination
+                               # NOTE: you need to enable JSON output for this to work!
+                               #       look at the [outputs] section below
+    enableFooterColumns = false  # activates footer columns, as described below
+    enableJumbotron = false  # enables jumbotron, as described below
+    # related articles will be selected randomly based on tags and shown at
+    # the bottom of the article, after the comments
+    enableRelatedArticles = false
+    relatedArticlesNum = 2  # how many related articles to show
+    randomRelated = false  # sorts related articles in random order (randomized at built time)
 
-  [params.flowchartDiagrams]# see https://blog.olowolo.com/example-site/post/js-flowchart-diagrams/
-    enable = false
-    options = ""
+[menu]
+    # these links will be added to the main navigation menu, sorted by weight
+    # other elements in this menu are added automatically from the "pages" folder
+    # the folder it will look into can be customized with the pages variable
+    # in params above
+    # [[menu.main]]
+    #     identifier = "about"
+    #     name = "About"
+    #     url = "/about/"
+    #     weight = 10
 
-  [params.sequenceDiagrams] # see https://blog.olowolo.com/example-site/post/js-sequence-diagrams/
-    enable = false
-    options = ""            # default: "{theme: 'simple'}"
+    # these links (menu.icons) will be added as icon links below the main nav
+    [[menu.icons]]
+        identifier = "github"
+        name = "Github"
+        url = "https://github.com/evnmrk"
+        weight = 20
 
-  [params.busuanzi]         # count web traffic by busuanzi                             # 是否使用不蒜子统计站点访问量
-    enable = false
-    siteUV = true
-    sitePV = true
-    pagePV = true
+    [[menu.icons]]
+        identifier = "email"
+        name = "Email"
+        url = "/about#Contact"
+        weight = 30
+    
+    # [[menu.icons]]
+    #     identifier = "gitlab"
+    #     name = "GitLab"
+    #     url = "https://gitlab.com/gabmus"
+    #     weight = 10
 
-  [params.reward]                                         # 文章打赏
-    enable = false
-    wechat = "/path/to/your/wechat-qr-code.png"           # 微信二维码
-    alipay = "/path/to/your/alipay-qr-code.png"           # 支付宝二维码
+# this section is necessary if you want infinite scrolling
+# it allows to output the article list as paged JSON so that "pages" can be retrieved via javascript
+[outputs]
+    home = ["HTML", "JSON"]
 
-  [params.social]                                         # 社交链接
-    a-email = "mailto:me@evnmrk.xyz"
-    #b-stack-overflow = "http://localhost:1313"
-    #c-twitter = "http://localhost:1313"
-    #d-facebook = "http://localhost:1313"
-    #e-linkedin = "http://localhost:1313"
-    #f-google = "http://localhost:1313"
-    g-github = "https://github.com/evnmrk"
-    #h-weibo = "http://localhost:1313"
-    #i-zhihu = "http://localhost:1313"
-    #j-douban = "http://localhost:1313"
-    #k-pocket = "http://localhost:1313"
-    #l-tumblr = "http://localhost:1313"
-    #m-instagram = "http://localhost:1313"
-    #n-gitlab = "http://localhost:1313"
-    #o-bilibili = "http://localhost:1313"
-
-# See https://gohugo.io/about/hugo-and-gdpr/
-[privacy]
-  [privacy.googleAnalytics]
-    disable = true
-    anonymizeIP = true      # 12.214.31.144 -> 12.214.31.0
-  [privacy.youtube]
-    privacyEnhanced = true
-
-# see https://gohugo.io/getting-started/configuration-markup
 [markup]
-  [markup.tableOfContents]
-    startLevel = 1
-  [markup.goldmark.renderer]
-    unsafe = true
-
-# 将下面这段配置取消注释可以使 hugo 生成 .md 文件
-# Uncomment these options to make hugo output .md files.
-#[mediaTypes]
-#  [mediaTypes."text/plain"]
-#    suffixes = ["md"]
-#
-#[outputFormats.MarkDown]
-#  mediaType = "text/plain"
-#  isPlainText = true
-#  isHTML = false
-#
-#[outputs]
-#  home = ["HTML", "RSS"]
-#  page = ["HTML", "MarkDown"]
-#  section = ["HTML", "RSS"]
-#  taxonomy = ["HTML", "RSS"]
-#  taxonomyTerm = ["HTML"]
+    [markup.highlight]
+        style = 'rrt'
