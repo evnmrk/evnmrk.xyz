@@ -1,21 +1,128 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>bash on evnmrk.xyz</title>
-    <link>https://evnmrk.xyz/tags/bash/</link>
-    <description>Recent content in bash on evnmrk.xyz</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Tue, 14 Nov 2023 11:27:08 -0800</lastBuildDate><atom:link href="https://evnmrk.xyz/tags/bash/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Bash Scripting - Mass VM SSH Connections for Fun and Giggles</title>
-      <link>https://evnmrk.xyz/post/ssh-fun-and-giggles/</link>
-      <pubDate>Tue, 14 Nov 2023 11:27:08 -0800</pubDate>
-      
-      <guid>https://evnmrk.xyz/post/ssh-fun-and-giggles/</guid>
-      <description>Introduction I am currently finishing my last semester of university. My final computer science elective I am taking is Linux Administration. It is a fairly easy and straightforward class, but the reason I am taking this class is to learn more about the Linux Operating System, specifically when it comes to system administration.
-One of the topics I wanted to learn about is bash scripting. I have seen many bash scripts online, but I have never taken the time to learn how to read or write them.</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet href="/feed_style.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="https://www.rssboard.org/media-rss"><channel><title>bash on evnmrk.xyz</title><link>https://evnmrk.xyz/tags/bash/</link><description>Recent content in bash on evnmrk.xyz</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 14 Nov 2023 11:27:08 -0800</lastBuildDate><atom:link href="https://evnmrk.xyz/tags/bash/index.xml" rel="self" type="application/rss+xml"/><icon>https://evnmrk.xyz/apple-touch-icon.png</icon><item><title>Bash Scripting - Mass VM SSH Connections for Fun and Giggles</title><link>https://evnmrk.xyz/posts/ssh-fun-and-giggles/</link><pubDate>Tue, 14 Nov 2023 11:27:08 -0800</pubDate><guid>https://evnmrk.xyz/posts/ssh-fun-and-giggles/</guid><description><![CDATA[<h2 id="introduction">Introduction</h2>
+<p>I am currently finishing my last semester of university. My final
+computer science elective I am taking is Linux Administration.
+It is a fairly easy and straightforward class, but the reason I am taking
+this class is to learn more about the Linux Operating System, specifically
+when it comes to system administration.</p>
+<p>One of the topics I wanted to learn about is bash scripting. I have seen many
+bash scripts online, but I have never taken the time to learn how to read or
+write them. We did have two lectures about bash scripting with their own lab,
+which is great, but I wanted more experience with bash scripts.</p>
+<p>Halfway through the semester, we transition into the virtual machine portion
+of the class, where we get to be sysadmins of our own virtual Linux
+distributions. Most of the students, including me, use the school computers,
+which are connected together in the same network. You can also SSH from the
+school computer into your virtual machine if you set the connection type to
+bridge. Because of this, I can SSH not only into my virtual machine, <em>but also
+other students' machines</em>. A mischevious idea brewed in my head that night.</p>
+<p>After one long coding session late at night, and a couple rewrites and
+modifications, I finally had an automated shell script that will SSH into
+<strong>every</strong> students' virtual machine and place a text file on their desktop &ndash;
+a signature from me proclaiming the time and date I &ldquo;hacked&rdquo; into their system.</p>
+<h2 id="the-bash-script">The Bash Script</h2>
+<p>Here is the bash script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#e5e5e5">#!/bin/bash
+</span><span style="color:#e5e5e5"></span>
+<span style="color:#0f0"># The purpose of this script is to ssh into VMs on the network and place a harmless text file on their desktop</span>
+
+<span style="color:#eedd82">OS</span>=<span style="color:#eedd82">$2</span>
+
+show_help() {
+        echo <span style="color:#87ceeb">&#34;Usage: sshtxtmsg [file] [operating-system]&#34;</span>
+        echo <span style="color:#87ceeb">&#34;  File must be formated: Last,First&#34;</span>
+        echo <span style="color:#87ceeb">&#34;  Must have &#39;sshpass&#39; installed!&#34;</span>
+}
+
+ssh() {
+        <span style="color:#eedd82">LNAME</span>=<span style="color:#87ceeb">`</span>echo <span style="color:#eedd82">$1</span> | egrep -o <span style="color:#87ceeb">&#39;^[[:alpha:]]*&#39;</span><span style="color:#87ceeb">`</span>
+        <span style="color:#0f0">#echo &#34;$LNAME&#34;</span>
+        <span style="color:#eedd82">FNAME</span>=<span style="color:#87ceeb">`</span>echo <span style="color:#eedd82">$1</span> | egrep -o <span style="color:#87ceeb">&#39;[[:alpha:]]*$&#39;</span><span style="color:#87ceeb">`</span>
+        <span style="color:#0f0">#echo &#34;$FNAME&#34;</span>
+        <span style="color:#eedd82">THREEF</span>=<span style="color:#87ceeb">`</span>echo <span style="color:#eedd82">$FNAME</span> | egrep -o <span style="color:#87ceeb">&#39;^[[:alpha:]]{1,3}&#39;</span><span style="color:#87ceeb">`</span>
+        <span style="color:#0f0">#echo &#34;$THREEF&#34;</span>
+        <span style="color:#eedd82">THREEL</span>=<span style="color:#87ceeb">`</span>echo <span style="color:#eedd82">$LNAME</span> | egrep -o <span style="color:#87ceeb">&#39;^[[:alpha:]]{1,3}&#39;</span><span style="color:#87ceeb">`</span>
+        <span style="color:#0f0">#echo &#34;$THREEL&#34;</span>
+        <span style="color:#eedd82">HNAME</span>=<span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">${</span><span style="color:#eedd82">OS</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">-</span><span style="color:#87ceeb">${</span><span style="color:#eedd82">THREEF</span><span style="color:#87ceeb">}${</span><span style="color:#eedd82">THREEL</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>
+        <span style="color:#0f0">#echo &#34;$HNAME&#34;</span>
+        <span style="color:#eedd82">USERNAME</span>=<span style="color:#87ceeb">`</span>echo <span style="color:#eedd82">$FNAME</span> | tr [:upper:] [:lower:]<span style="color:#87ceeb">`</span>
+        <span style="color:#0f0">#echo &#34;$USERNAME&#34;</span>
+        <span style="color:#eedd82">COMMAND</span>=<span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">${</span><span style="color:#eedd82">USERNAME</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">@</span><span style="color:#87ceeb">${</span><span style="color:#eedd82">HNAME</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">&#34;</span>
+        <span style="color:#0f0">#CMD=&#39;sshpass -p MP2650 ssh -o StrictHostKeyChecking=no -q -l root $HNAME &#34;echo &#34;EVNMRK WAS HERE ON &#34; &gt; ~/Desktop/EVNMRK-WAS-HERE.txt; date &gt;&gt; ~/Desktop/EVNMRK-WAS-HERE.txt&#34;&#39;</span>
+        <span style="color:#eedd82">CMD</span>=<span style="color:#87ceeb">&#39;sshpass -p cmps2650 ssh -o StrictHostKeyChecking=no -q -l $USERNAME $HNAME &#34;echo &#34;EVNMRK WAS HERE ON &#34; &gt; ~/Desktop/EVNMRK-WAS-HERE.txt; date &gt;&gt; ~/Desktop/EVNMRK-WAS-HERE.txt&#34;&#39;</span>
+        <span style="color:#0f0">#CMD1=&#34;echo &#39;$COMMAND&#39;&#34;</span>
+        eval <span style="color:#87ceeb">&#34;</span><span style="color:#eedd82">$CMD</span><span style="color:#87ceeb">&#34;</span>
+        <span style="color:#f00">if</span> [ <span style="color:#eedd82">$?</span> -eq <span style="color:#f60">0</span> ]; <span style="color:#f00">then</span>
+                echo <span style="color:#87ceeb">&#34;SUCCESS for </span><span style="color:#eedd82">$COMMAND</span><span style="color:#87ceeb"> - </span><span style="color:#eedd82">$1</span><span style="color:#87ceeb">&#34;</span>
+        <span style="color:#f00">elif</span> [ <span style="color:#eedd82">$?</span> -eq <span style="color:#f60">1</span> ]; <span style="color:#f00">then</span>
+                echo <span style="color:#87ceeb">&#34;FAILURE for </span><span style="color:#eedd82">$COMMAND</span><span style="color:#87ceeb">&#34;</span>
+        <span style="color:#f00">else</span>
+                echo <span style="color:#87ceeb">&#34;UNKNOWN ERROR&#34;</span>
+        <span style="color:#f00">fi</span>
+}
+
+<span style="color:#0f0"># MAIN</span>
+
+<span style="color:#f00">if</span> [ <span style="color:#eedd82">$#</span> -lt <span style="color:#f60">2</span> ]; <span style="color:#f00">then</span>
+        show_help
+        exit <span style="color:#f60">1</span>
+<span style="color:#f00">fi</span>
+<span style="color:#f00">for</span> name in <span style="color:#87ceeb">`</span>cat <span style="color:#eedd82">$1</span><span style="color:#87ceeb">`</span>; <span style="color:#f00">do</span>
+        ssh <span style="color:#87ceeb">&#34;</span><span style="color:#eedd82">$name</span><span style="color:#87ceeb">&#34;</span>
+<span style="color:#f00">done</span>
+</code></pre></div><h3 id="usage">Usage</h3>
+<pre tabindex="0"><code>Usage: sshtxtmsg [file] [operating-system]
+	File must be formated: Last,First
+	Must have 'sshpass' installed!
+</code></pre><h3 id="how-it-works">How It Works</h3>
+<p>The script requires a text file with every students' name in the format of
+&ldquo;Last,First&rdquo; as the first argument. Each name is separated by a newline.
+The script also requires the name of the operating system you are connecting
+to as the second argument. The reason for this is because of how we set up the
+virtual machines as a class. The instructor had us follow instructions on how
+to set up our virtual machines. Part of this instructions is what to put for
+the hostname, username, password, and root password. These fields are
+determined by the students' first and last name, which is why we need the
+student roster. The hostname field has the operating system&rsquo;s name inside, too.</p>
+<ul>
+<li>Example Debian hostname for student &ldquo;Dale Cooper&rdquo;
+<ul>
+<li><code>debian-dalcoo</code></li>
+</ul>
+</li>
+<li>Example username
+<ul>
+<li><code>dale</code></li>
+</ul>
+</li>
+<li>Example ssh command
+<ul>
+<li><code>ssh dale@debian-dalcoo</code></li>
+</ul>
+</li>
+</ul>
+<p>Using regex, we can splice the first and last name to create a username and
+hostname. But we run into a problem: <code>ssh</code> cannot be automated, since it
+queries for a password. To solve this, we use the very unsecure <code>sshpass</code>,
+which can hold the password in a flag. The password of the user is the same for
+everyone: the classname. We also add the <code>StrictHostKeyChecking=no</code> flag to
+ignore asking to remember the ssh fingerprint for 100% automation. Here is
+that command:</p>
+<p><code>sshpass -p cmps2650 ssh -o StrictHostKeyChecking=no -q -l $USERNAME $HNAME</code></p>
+<p>We can append the commands to run once a connection is made to the end of the
+sshpass command. We just run an echo command for our text and redirect it into
+a new textfile. Then we append the datetime the same way.</p>
+<p><code>&quot;EVNMRK WAS HERE ON &quot; &gt; ~/Desktop/EVNMRK-WAS-HERE.txt; date &gt;&gt; ~/Desktop/EVNMRK-WAS-HERE.txt&quot;</code></p>
+<p>The script will do the previous commands for every student entry, outputting
+a success or failure.</p>
+<h3 id="known-issues">Known Issues</h3>
+<p>This script will not work for users who choose their own unique hostname,
+username, or password. It will also not work for users who install their
+virtual machine on their own laptop. Basically it doesn&rsquo;t work on students
+who are lazy, cannot RTFM, or are mavericks.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Out of the many times I ran this script, I only had three successful
+connections.</p>
+<p>I also have a version of this script that will run in an infinite loop,
+but let&rsquo;s not get into any trouble with that&hellip;</p>
+<p>Use this script however you like, feel free to modify for your own use.</p>
+]]></description></item></channel></rss>
