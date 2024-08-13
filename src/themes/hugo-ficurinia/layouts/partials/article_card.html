@@ -18,9 +18,9 @@
             {{ if .Params.Image }}
                 <a class="unstyledLink" href="{{ .Permalink }}">
                     {{ if or (hasPrefix .Params.Image "/") (hasPrefix .Params.Image "http://") (hasPrefix .Params.Image "https://") }}
-                        <img src="{{ .Params.Image }}" alt="{{ .Params.Alt }}" />
+		    	<img src="{{ .Params.Image }}" alt="{{ .Params.Alt }}" style="{{ .Params.Style }}"/>
                     {{ else }}
-                        <img src="{{ .Permalink }}/{{ .Params.Image }}" alt="{{ .Params.Alt }}" />
+		    	<img src="{{ .Permalink }}/{{ .Params.Image }}" alt="{{ .Params.Alt }}" style="{{ .Params.Style }}"/>
                     {{ end }}
                 </a>
             {{ end }}

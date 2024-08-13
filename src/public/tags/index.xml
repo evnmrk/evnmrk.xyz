@@ -1,1 +1,155 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet href="/feed_style.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="https://www.rssboard.org/media-rss"><channel><title>Tags on evnmrk.xyz</title><link>https://evnmrk.xyz/tags/</link><description>Recent content in Tags on evnmrk.xyz</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 14 Nov 2023 11:27:08 -0800</lastBuildDate><atom:link href="https://evnmrk.xyz/tags/index.xml" rel="self" type="application/rss+xml"/><icon>https://evnmrk.xyz/apple-touch-icon.png</icon><item><title>bash</title><link>https://evnmrk.xyz/tags/bash/</link><pubDate>Tue, 14 Nov 2023 11:27:08 -0800</pubDate><guid>https://evnmrk.xyz/tags/bash/</guid><description></description></item><item><title>script</title><link>https://evnmrk.xyz/tags/script/</link><pubDate>Tue, 14 Nov 2023 11:27:08 -0800</pubDate><guid>https://evnmrk.xyz/tags/script/</guid><description></description></item><item><title>shell</title><link>https://evnmrk.xyz/tags/shell/</link><pubDate>Tue, 14 Nov 2023 11:27:08 -0800</pubDate><guid>https://evnmrk.xyz/tags/shell/</guid><description></description></item><item><title>SSH</title><link>https://evnmrk.xyz/tags/ssh/</link><pubDate>Tue, 14 Nov 2023 11:27:08 -0800</pubDate><guid>https://evnmrk.xyz/tags/ssh/</guid><description></description></item><item><title>CTF</title><link>https://evnmrk.xyz/tags/ctf/</link><pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate><guid>https://evnmrk.xyz/tags/ctf/</guid><description></description></item><item><title>networking</title><link>https://evnmrk.xyz/tags/networking/</link><pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate><guid>https://evnmrk.xyz/tags/networking/</guid><description></description></item><item><title>perl</title><link>https://evnmrk.xyz/tags/perl/</link><pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate><guid>https://evnmrk.xyz/tags/perl/</guid><description></description></item><item><title>Writeup</title><link>https://evnmrk.xyz/tags/writeup/</link><pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate><guid>https://evnmrk.xyz/tags/writeup/</guid><description></description></item><item><title>ångstromCTF</title><link>https://evnmrk.xyz/tags/%C3%A5ngstromctf/</link><pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate><guid>https://evnmrk.xyz/tags/%C3%A5ngstromctf/</guid><description></description></item><item><title>web</title><link>https://evnmrk.xyz/tags/web/</link><pubDate>Fri, 15 Sep 2023 22:28:55 -0700</pubDate><guid>https://evnmrk.xyz/tags/web/</guid><description></description></item><item><title>blog</title><link>https://evnmrk.xyz/tags/blog/</link><pubDate>Thu, 14 Sep 2023 20:00:23 -0700</pubDate><guid>https://evnmrk.xyz/tags/blog/</guid><description></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet href="/feed_style.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="https://www.rssboard.org/media-rss">
+  <channel>
+    <title>Tags on evnmrk.xyz</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on evnmrk.xyz</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 12 Aug 2024 19:52:13 -0700</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><icon>http://localhost:1313/apple-touch-icon.png</icon>
+    
+    
+    <item>
+      <title>Hack the Box</title>
+      <link>http://localhost:1313/tags/hack-the-box/</link>
+      <pubDate>Mon, 12 Aug 2024 19:52:13 -0700</pubDate>
+      
+      <guid>http://localhost:1313/tags/hack-the-box/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>Writeup</title>
+      <link>http://localhost:1313/tags/writeup/</link>
+      <pubDate>Mon, 12 Aug 2024 19:52:13 -0700</pubDate>
+      
+      <guid>http://localhost:1313/tags/writeup/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>Bash</title>
+      <link>http://localhost:1313/tags/bash/</link>
+      <pubDate>Tue, 14 Nov 2023 11:27:08 -0800</pubDate>
+      
+      <guid>http://localhost:1313/tags/bash/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>Script</title>
+      <link>http://localhost:1313/tags/script/</link>
+      <pubDate>Tue, 14 Nov 2023 11:27:08 -0800</pubDate>
+      
+      <guid>http://localhost:1313/tags/script/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>Shell</title>
+      <link>http://localhost:1313/tags/shell/</link>
+      <pubDate>Tue, 14 Nov 2023 11:27:08 -0800</pubDate>
+      
+      <guid>http://localhost:1313/tags/shell/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>SSH</title>
+      <link>http://localhost:1313/tags/ssh/</link>
+      <pubDate>Tue, 14 Nov 2023 11:27:08 -0800</pubDate>
+      
+      <guid>http://localhost:1313/tags/ssh/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>ÅngstromCTF</title>
+      <link>http://localhost:1313/tags/%C3%A5ngstromctf/</link>
+      <pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate>
+      
+      <guid>http://localhost:1313/tags/%C3%A5ngstromctf/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>CTF</title>
+      <link>http://localhost:1313/tags/ctf/</link>
+      <pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate>
+      
+      <guid>http://localhost:1313/tags/ctf/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>Networking</title>
+      <link>http://localhost:1313/tags/networking/</link>
+      <pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate>
+      
+      <guid>http://localhost:1313/tags/networking/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>Perl</title>
+      <link>http://localhost:1313/tags/perl/</link>
+      <pubDate>Fri, 15 Sep 2023 22:49:48 -0700</pubDate>
+      
+      <guid>http://localhost:1313/tags/perl/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>Web</title>
+      <link>http://localhost:1313/tags/web/</link>
+      <pubDate>Fri, 15 Sep 2023 22:28:55 -0700</pubDate>
+      
+      <guid>http://localhost:1313/tags/web/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+    
+    <item>
+      <title>Blog</title>
+      <link>http://localhost:1313/tags/blog/</link>
+      <pubDate>Thu, 14 Sep 2023 20:00:23 -0700</pubDate>
+      
+      <guid>http://localhost:1313/tags/blog/</guid>
+      <description><![CDATA[]]></description>
+      
+    </item>
+    
+    
+  </channel>
+</rss>

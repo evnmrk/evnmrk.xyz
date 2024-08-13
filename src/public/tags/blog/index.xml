@@ -1,4 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet href="/feed_style.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="https://www.rssboard.org/media-rss"><channel><title>blog on evnmrk.xyz</title><link>https://evnmrk.xyz/tags/blog/</link><description>Recent content in blog on evnmrk.xyz</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 14 Sep 2023 20:00:23 -0700</lastBuildDate><atom:link href="https://evnmrk.xyz/tags/blog/index.xml" rel="self" type="application/rss+xml"/><icon>https://evnmrk.xyz/apple-touch-icon.png</icon><item><title>Hello World</title><link>https://evnmrk.xyz/posts/hello-world/</link><pubDate>Thu, 14 Sep 2023 20:00:23 -0700</pubDate><guid>https://evnmrk.xyz/posts/hello-world/</guid><description><![CDATA[<p>Hello world!</p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet href="/feed_style.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="https://www.rssboard.org/media-rss">
+  <channel>
+    <title>Blog on evnmrk.xyz</title>
+    <link>http://localhost:1313/tags/blog/</link>
+    <description>Recent content in Blog on evnmrk.xyz</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 14 Sep 2023 20:00:23 -0700</lastBuildDate><atom:link href="http://localhost:1313/tags/blog/index.xml" rel="self" type="application/rss+xml" /><icon>http://localhost:1313/apple-touch-icon.png</icon>
+    
+    
+    <item>
+      <title>Hello World</title>
+      <link>http://localhost:1313/posts/hello-world/</link>
+      <pubDate>Thu, 14 Sep 2023 20:00:23 -0700</pubDate>
+      
+      <guid>http://localhost:1313/posts/hello-world/</guid>
+      <description><![CDATA[<p>Hello world!</p>
 <p>This is my first post marking the day I set up this website.</p>
 <h2 id="purpose-of-this-blog">Purpose of This Blog</h2>
 <p>I created this blog as a response to the gaining popularity of &ldquo;micro-blogging&rdquo; websites like Twitter and Facebook. Micro-blogging leaves little room for complete thoughts and ideas, and I believe personal blogs are the remedy to this problem. Plus, personal blogs can have much more customization if one knows their way around their static site generator.</p>
@@ -6,6 +22,12 @@
 <h2 id="what-to-expect">What to Expect</h2>
 <p>I plan to post about my interests. These include: code snippets, CTF write-ups, film and music reviews, random thoughts or ideas. I may even write some short stories or draw some quick digital art. Whatever I feel like creating, I will likely put here. If these topics interest you, feel free to bookmark this page or subscribe to the RSS feed to get notifications as soon as this site is updated.</p>
 <p>Hopefully, in the near future, I will have a website full of work that I can be proud of.</p>
-<p>If you want to contact me you can find my email at the <a href="https://evnmrk.xyz/about/">about page</a>. I would love to hear your thoughts and opinions about my posts, or if you found any errors or typos.</p>
+<p>If you want to contact me you can find my email at the <a href="http://localhost:1313/about/">about page</a>. I would love to hear your thoughts and opinions about my posts, or if you found any errors or typos.</p>
 <p>Thank you for reading,</p>
-<p>evnmrk</p>]]></description></item></channel></rss>
+<p>evnmrk</p>]]></description>
+      
+    </item>
+    
+    
+  </channel>
+</rss>

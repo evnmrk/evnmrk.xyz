@@ -52,6 +52,6 @@ close($socket);
 ```
 
 # Result
-![](/actf2023-simon-says.png "Terminal output of the successful perl script")
+![](images/actf2023-simon-says.png "Terminal output of the successful perl script")
 
 The script quickly solved the server's three questions which rewarded us with the challenge's flag. It should also be noted that I adapted this script from my friend Reid's python script, which originally solved the challenge for our team. I wanted to challenge myself by solving the flag with a perl script.
