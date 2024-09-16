@@ -156,6 +156,12 @@ summaryLength = 70  # number of words for article summaries
         url = "/about#Contact"
         weight = 30
     
+    [[menu.icons]]
+        identifier = "linkedin"
+        name = "LinkedIn"
+        url = "https://www.linkedin.com/in/evnmrk/"
+        weight = 40
+    
     # [[menu.icons]]
     #     identifier = "gitlab"
     #     name = "GitLab"
