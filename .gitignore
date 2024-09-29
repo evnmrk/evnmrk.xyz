@@ -2,4 +2,4 @@
 /resources/_gen/
 
 deploy
-public/
+src/public/
