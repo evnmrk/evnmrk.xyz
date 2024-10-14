@@ -3,7 +3,7 @@ title: "Honeypot October 2024 - Using Claude and Pandas"
 date: 2024-10-13
 tags: ["Honeypot","Claude","Pandas"]
 description:
-draft: false
+draft: true
 ---
 
 ## Introduction
