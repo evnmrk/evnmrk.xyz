@@ -6,16 +6,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy-website:
+  check-and-deploy-website:
     runs-on: ubuntu-latest
     steps:
-     
-      - name: Do a git checkout including submodules
-        uses: actions/checkout@master
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
+          fetch-depth: 0
           submodules: true
 
+      - name: Check for new non-draft content
+        id: check_content
+        run: |
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^content/' | while read file; do
+            if grep -q "draft: false" "$file"; then
+              echo "New non-draft content found"
+              echo "deploy=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+          done
+
       - name: Generate and deploy website
+        if: steps.check_content.outputs.deploy == 'true' || github.event_name == 'workflow_dispatch'
         uses: evnmrk/hugo-rsync-deployment@master
         env:
           VPS_DEPLOY_KEY: ${{ secrets.VPS_DEPLOY_KEY }}
