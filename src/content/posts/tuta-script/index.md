@@ -3,6 +3,7 @@ title: "Bash Script to Install Tuta AppImage"
 date: 2024-11-04T18:04:19-08:00
 tags: ["script", "appimage", "bash"]
 draft: false
+toc: false
 ---
 
 I use Tuta as my trusted email client for over a year now, and I've noticed a bug in the Linux appimage that annoys me to no end. When Tuta needs an update, the appimage will prompt you with the choice to install the update now, but this prompt only shows up for about 3 seconds. If you have Tuta open on startup, there is a good chance you will miss this prompt.
