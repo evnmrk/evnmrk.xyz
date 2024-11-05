@@ -15,20 +15,13 @@ jobs:
           fetch-depth: 0
           submodules: true
 
-      - name: Debug git info
-        run: |
-          echo "Current commit: $(git rev-parse HEAD)"
-          echo "Previous commit: ${{ github.event.before }}"
-          echo "All changed files:"
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
-
       - name: Check for new non-draft content
         id: check_content
         run: |
           echo "Starting content check..."
           
           # Create a list of changed content files
-          CHANGED_CONTENT=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "^content/.*\.md$" || true)
+          CHANGED_CONTENT=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "^src/content/.*\.md$" || true)
           
           if [ -z "$CHANGED_CONTENT" ]; then
             echo "No content files were changed"
@@ -39,23 +32,31 @@ jobs:
           echo "Changed content files:"
           echo "$CHANGED_CONTENT"
           
+          DEPLOY="false"
           # Check each changed content file
           while IFS= read -r file; do
             if [ -f "$file" ]; then
               echo "Checking file: $file"
               echo "File contents:"
-              cat "$file"
+              head -n 10 "$file"  # Show first 10 lines for debugging
               
-              if ! grep -q "draft: true" "$file"; then
+              # Look for draft: false specifically in the YAML frontmatter
+              if grep -q "^draft: false" "$file"; then
                 echo "Found non-draft content in $file"
-                echo "deploy=true" >> $GITHUB_OUTPUT
-                exit 0
+                DEPLOY="true"
+                break
+              else
+                echo "Draft status check failed for $file"
+                echo "Searching for exact line containing 'draft:'"
+                grep -n "draft:" "$file" || echo "No 'draft:' line found"
               fi
+            else
+              echo "File not found: $file"
             fi
           done <<< "$CHANGED_CONTENT"
           
-          echo "No non-draft content found"
-          echo "deploy=false" >> $GITHUB_OUTPUT
+          echo "Deploy status: $DEPLOY"
+          echo "deploy=$DEPLOY" >> $GITHUB_OUTPUT
 
       - name: Generate and deploy website
         if: steps.check_content.outputs.deploy == 'true' || github.event_name == 'workflow_dispatch'
