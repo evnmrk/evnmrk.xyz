@@ -1,0 +1,3 @@
+[submodule "src/themes/eudaimonia"]
+	path = src/themes/eudaimonia
+	url = https://github.com/evnmrk/eudaimonia.git
