@@ -24,7 +24,7 @@ I plan to post about my interests. These include: code snippets, CTF write-ups, 
 
 Hopefully, in the near future, I will have a website full of work that I can be proud of.
 
-If you want to contact me you can find my email at the [about page]({{< ref "about.md" >}}). I would love to hear your thoughts and opinions about my posts, or if you found any errors or typos.
+If you want to contact me you can find my email at the [about page]({{< ref "_index.md" >}}). I would love to hear your thoughts and opinions about my posts, or if you found any errors or typos.
 
 Thank you for reading,
 

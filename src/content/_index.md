@@ -1,11 +1,6 @@
 ---
-title: "About"
-menu: "main"
-showDate: false
-showTitle: false
-norss: true
-nosearch: true
-weight: 50
+title: "Home"
+layout: "home"
 
 ---
 

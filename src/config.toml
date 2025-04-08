@@ -1,7 +1,50 @@
 baseURL = "https://evnmrk.xyz/"
-theme = ""
+theme = "eudaimonia"
 title = "evnmrk.xyz"
 languageCode = "en"
 defaultContentLanguage = "en"
+pygmentsUseClasses = true
 
+[[menus.main]]
+name = 'Home'
+pageRef = '/'
+weight = 10
 
+[[menus.main]]
+name = 'Posts'
+pageRef = '/posts'
+weight = 20
+
+[[menus.main]]
+name = 'Tags'
+pageRef = '/tags'
+weight = 30
+
+[[menu.icons]]
+	identifier = "rss"
+	name = "RSS"
+	url = "/posts/index.xml"
+	weight = 10
+
+[[menu.icons]]
+  identifier = "github"
+  name = "Github"
+  url = "https://github.com/evnmrk"
+  weight = 20
+
+[[menu.icons]]
+  identifier = "email"
+  name = "Email"
+  url = "#Contact"
+  weight = 30
+   
+[[menu.icons]]
+  identifier = "linkedin"
+  name = "LinkedIn"
+  url = "https://www.linkedin.com/in/evnmrk/"
+  weight = 40
+
+[module]
+  [module.hugoVersion]
+    extended = false
+    min = "0.116.0"

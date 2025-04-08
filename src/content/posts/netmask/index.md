@@ -12,7 +12,7 @@ When learning about IP version 4, the concept of netmasks can be hard to grasp. 
 
 ### Disclaimer
 
-If you find anything factually incorrect in this blog post, please get into contact with me [here](/about#contact), and I will correct the mistake as soon as possible.
+If you find anything factually incorrect in this blog post, please get into contact with me [here](#contact), and I will correct the mistake as soon as possible.
 
 ## The Network Mask
 
